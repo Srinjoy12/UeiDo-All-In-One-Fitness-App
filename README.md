@@ -1,104 +1,168 @@
-# UeiDo — All-in-One Fitness
+# UeiDo — All-in-One Fitness App
 
-React + TypeScript + Vite app with Supabase auth, per-user plans, and AI-generated workouts/diet via Groq AI.
+<div align="center">
 
-## Environment
+![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=flat&logo=typescript&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7-646CFF?style=flat&logo=vite&logoColor=white)
+![Supabase](https://img.shields.io/badge/Supabase-Backend-3ECF8E?style=flat&logo=supabase&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 
-1. **Supabase Auth** – For signup → questionnaire → dashboard flow, disable email confirmation:
-   - Go to [Supabase Dashboard](https://supabase.com/dashboard) → your project → **Authentication** → **Providers** → **Email**
-   - Turn **OFF** "Confirm email"
-   - Users will get a session immediately after signup and can complete onboarding without checking email
+**AI-powered fitness tracking with personalized plans, smart meal logging, and geo-based workout detection.**
 
-2. **Frontend env** – Copy `.env.example` to `.env.local` and set:
-   - `VITE_SUPABASE_URL` – your Supabase project URL
-   - `VITE_SUPABASE_ANON_KEY` – your Supabase anon (publishable) key
+[Live Demo](#) · [Report Bug](https://github.com/Srinjoy12/UeiDo-All-In-One-Fitness-App/issues) · [Request Feature](https://github.com/Srinjoy12/UeiDo-All-In-One-Fitness-App/issues)
 
-2. **Groq AI (Edge Function)** – The app calls the `generate-plan` Edge Function to create personalized plans. The Groq API key must **never** go in the frontend. Set it in Supabase:
-   - **Production**: [Supabase Dashboard](https://supabase.com/dashboard) → your project → **Project Settings** → **Edge Functions** → **Secrets** → add `GROQ_API_KEY` with your Groq API key.
-   - **Local** (when using `supabase functions serve`): add `GROQ_API_KEY=your_key` to a `.env` file in the project root or in `supabase/.env`.
-
-Get a Groq API key at [console.groq.com](https://console.groq.com/keys).
-
-### Edge Function 401 fix
-
-If "Create my plan" returns 401 Unauthorized, redeploy the Edge Function with JWT verification disabled (the function validates the token itself):
-
-```bash
-supabase functions deploy generate-plan
-```
-
-The `supabase/config.toml` has `verify_jwt = false` for `generate-plan`. Ensure `GROQ_API_KEY` is set in Supabase Dashboard → Project Settings → Edge Functions → Secrets.
+</div>
 
 ---
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## ✨ Highlights
 
-Currently, two official plugins are available:
+- **AI-Generated Plans** — Personalized 7-day workout & diet plans using Groq AI (Llama 3.3 70B), tailored to goals, experience, and activity level
+- **Vision-Powered Meal Logging** — Snap a photo of your food; AI estimates calories, protein, carbs, and logs it automatically
+- **Geo-Location Workout Tracking** — Gym visits auto-logged when you're within 100m of your gym for 15 minutes
+- **Indian-First Design** — Diet plans with Indian cuisine, regional preferences, and local gym search
+- **Full-Stack Production App** — Auth, database, edge functions, RLS, and responsive UI
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Feature | Description |
+|--------|-------------|
+| **Personalized Plans** | AI generates unique gym & home workouts (7 days) + 7-day Indian diet based on profile & questionnaire |
+| **Meal Photo Analysis** | Camera capture → Groq Vision AI → instant nutritional estimate → auto-log to daily intake |
+| **Geo-Tracking** | Set gym location on map; workouts auto-complete when you're at the gym (manual option retained) |
+| **Dashboard** | Today's workout, calorie intake vs target, BMI, weekly streak, quick links |
+| **Workouts** | Gym & home tabs, day selector, exercise lists, manual/auto completion |
+| **Diet** | 7-day AI-generated Indian meal plan with calorie targets |
+| **Settings** | Light/dark theme, gym location picker (map + search), geo-tracking toggle |
+| **Reminders** | Configurable workout & meal reminders |
+| **Motivation** | Daily quotes and progress insights |
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🛠 Tech Stack
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | React 19, TypeScript, Vite 7, Tailwind CSS, React Router 7, Zustand |
+| **Backend** | Supabase (Auth, PostgreSQL, Row Level Security) |
+| **AI** | Groq (Llama 3.3 70B for plans, Vision for meal analysis) |
+| **Maps** | Leaflet, React-Leaflet, Photon (geocoding) |
+| **Deploy** | Netlify / Vercel ready |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## 📁 Project Structure
+
+```
+├── src/
+│   ├── components/     # Layout, ProtectedRoute, ErrorBoundary, SetupRequired
+│   ├── hooks/          # usePlan, useMealLogs, useGeoTracking, useTheme, useProfile, ...
+│   ├── pages/          # Dashboard, Workouts, Diet, MealPhoto, Settings, BMI, ...
+│   ├── providers/       # AuthProvider
+│   ├── store/          # Zustand (profile, theme, geo-tracking)
+│   ├── lib/             # supabaseClient, bmi, authErrors, database types
+│   └── data/            # Static fallbacks, workout images
+├── supabase/
+│   ├── functions/      # generate-plan, analyze-meal, nominatim-search (Edge Functions)
+│   └── migrations/     # Schema (profiles, plans, workout_logs, meal_logs, reminders)
+├── public/
+├── vercel.json         # Vercel config
+├── netlify.toml        # Netlify config
+└── DEPLOY.md           # Deployment guide
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🏗 Architecture
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+┌─────────────────────────────────────────────────────────────────┐
+│                        React SPA (Vite)                          │
+│  Dashboard │ Workouts │ Diet │ Meal Photo │ BMI │ Settings       │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+        ┌────────────────────┼────────────────────┐
+        ▼                    ▼                    ▼
+┌───────────────┐   ┌─────────────────┐   ┌──────────────────┐
+│  Supabase     │   │  Edge Functions │   │  Photon API       │
+│  Auth + DB    │   │  (Groq AI)       │   │  (Geocoding)      │
+│  RLS enforced │   │  generate-plan   │   │  Gym search       │
+│               │   │  analyze-meal     │   └──────────────────┘
+└───────────────┘   └─────────────────┘
+```
+
+---
+
+## ⚡ Quick Start
+
+### Prerequisites
+
+- Node.js 18+
+- Supabase project
+- Groq API key (for AI features)
+
+### 1. Clone & Install
+
+```bash
+git clone https://github.com/Srinjoy12/UeiDo-All-In-One-Fitness-App.git
+cd UeiDo-All-In-One-Fitness-App
+npm install
+```
+
+### 2. Environment
+
+Copy `.env.example` to `.env.local` and set:
+
+```env
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_ANON_KEY=your_anon_key
+```
+
+### 3. Supabase Setup
+
+- **Auth** → Disable email confirmation (or configure redirect URLs)
+- **Edge Functions** → Add secret `GROQ_API_KEY` in Dashboard → Project Settings → Edge Functions → Secrets
+- **Database** → Run migrations: `npx supabase db push` (or apply SQL manually)
+
+### 4. Deploy Edge Functions
+
+```bash
+npx supabase functions deploy generate-plan
+npx supabase functions deploy analyze-meal
+npx supabase functions deploy nominatim-search
+```
+
+### 5. Run Locally
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173).
+
+---
+
+## 📦 Build & Deploy
+
+```bash
+npm run build
+```
+
+Static output in `dist/`. Deploy to [Netlify](https://netlify.com) or [Vercel](https://vercel.com) — see [DEPLOY.md](./DEPLOY.md) for details.
+
+---
+
+## 📄 License
+
+MIT
+
+---
+
+<div align="center">
+
+**Built with React, TypeScript, Supabase & Groq AI**
+
+</div>
