@@ -1,0 +1,6 @@
+# Supabase config - add [functions.generate-plan] verify_jwt = false
+# to bypass gateway JWT verification (our function validates the token itself)
+# Run: supabase functions deploy generate-plan
+
+[functions.generate-plan]
+verify_jwt = false

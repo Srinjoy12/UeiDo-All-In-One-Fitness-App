@@ -1,0 +1,12 @@
+{
+  "name": "UeiDo — All-in-One Fitness",
+  "short_name": "UeiDo",
+  "description": "Daily gym & home workouts, diet plans, BMI, calorie tracking & motivation",
+  "theme_color": "#16a34a",
+  "background_color": "#0f172a",
+  "display": "standalone",
+  "start_url": "/",
+  "icons": [
+    { "src": "/vite.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
