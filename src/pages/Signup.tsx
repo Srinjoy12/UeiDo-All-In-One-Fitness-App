@@ -36,7 +36,7 @@ export default function Signup() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-surface-900">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-black">
       <div className="w-full max-w-sm card p-6">
         <h1 className="font-display text-2xl font-bold text-zinc-100 mb-1">Create account</h1>
         <p className="text-zinc-400 text-sm mb-6">Sign up for UeiDo</p>
@@ -70,7 +70,7 @@ export default function Signup() {
             <p className="text-sm text-red-400">{error}</p>
           )}
           {info && (
-            <p className="text-sm text-gradient">{info}</p>
+            <p className="text-sm text-[#ff3d00]">{info}</p>
           )}
           <button
             type="submit"
@@ -82,7 +82,7 @@ export default function Signup() {
         </form>
         <p className="mt-4 text-center text-zinc-400 text-sm">
           Already have an account?{' '}
-          <Link to="/login" className="text-gradient hover:opacity-80">Sign in</Link>
+          <Link to="/login" className="text-[#ff3d00] hover:opacity-80">Sign in</Link>
         </p>
       </div>
     </div>

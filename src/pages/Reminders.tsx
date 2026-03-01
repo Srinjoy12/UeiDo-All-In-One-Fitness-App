@@ -39,7 +39,7 @@ export default function Reminders() {
   return (
     <div className="space-y-6">
       <section>
-        <h2 className="font-display text-2xl font-bold text-zinc-100">Reminders</h2>
+        <h2 className="font-display text-3xl font-bold text-zinc-100 tracking-tight">Reminders</h2>
         <p className="text-zinc-400 text-sm mt-1">
           Set reminders for workouts, meals, and more. You'll get browser notifications.
         </p>
@@ -115,7 +115,7 @@ export default function Reminders() {
                     type="button"
                     onClick={() => toggleReminder(r.id, !r.enabled)}
                     className={`w-10 h-6 rounded-full transition-colors ${
-                      r.enabled ? 'btn-tab-active' : 'bg-surface-600'
+                      r.enabled ? 'btn-tab-active' : 'bg-[#111] border border-white/[0.06]'
                     }`}
                     role="switch"
                     aria-checked={r.enabled}

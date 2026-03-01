@@ -61,7 +61,7 @@ export default function BMI() {
   return (
     <div className="space-y-8">
       <section>
-        <h2 className="font-display text-2xl font-bold text-zinc-100">BMI & Calories</h2>
+        <h2 className="font-display text-3xl font-bold text-zinc-100 tracking-tight">BMI & Calories</h2>
         <p className="text-zinc-400 text-sm mt-1">
           Enter your stats to get BMI, calorie target, and burn goal.
         </p>
@@ -171,7 +171,7 @@ export default function BMI() {
           <div className="card p-5">
             <h3 className="font-semibold text-zinc-200 mb-4">BMI</h3>
             <div className="flex items-baseline gap-2">
-              <span className="text-4xl font-bold text-gradient">{bmi}</span>
+              <span className="text-4xl font-bold text-[#ff3d00]">{bmi}</span>
               <span className="text-zinc-400">{category}</span>
             </div>
             <p className="text-sm text-zinc-500 mt-2">

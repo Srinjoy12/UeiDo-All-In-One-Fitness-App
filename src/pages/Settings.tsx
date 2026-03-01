@@ -149,7 +149,7 @@ export default function Settings() {
         setGymName('My Gym')
         setSaved(false)
       },
-      () => {},
+      () => { },
       { enableHighAccuracy: true },
     )
   }
@@ -201,7 +201,7 @@ export default function Settings() {
   return (
     <div className="space-y-6">
       <section>
-        <h2 className="font-display text-2xl font-bold text-zinc-100">Settings</h2>
+        <h2 className="font-display text-3xl font-bold text-zinc-100 tracking-tight">Settings</h2>
       </section>
 
       {/* Account */}
@@ -222,18 +222,16 @@ export default function Settings() {
           <button
             type="button"
             onClick={() => handleThemeChange('dark')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-medium transition-all ${
-              theme === 'dark' ? 'btn-tab-active' : 'bg-surface-800 text-zinc-400 hover:text-zinc-200'
-            }`}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-medium transition-all ${theme === 'dark' ? 'btn-tab-active' : 'bg-[#111] text-zinc-500 hover:text-white border border-white/[0.06]'
+              }`}
           >
             <Moon className="w-5 h-5" /> Dark
           </button>
           <button
             type="button"
             onClick={() => handleThemeChange('light')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-medium transition-all ${
-              theme === 'light' ? 'btn-tab-active' : 'bg-surface-800 text-zinc-400 hover:text-zinc-200'
-            }`}
+            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-medium transition-all ${theme === 'light' ? 'btn-tab-active' : 'bg-[#111] text-zinc-500 hover:text-white border border-white/[0.06]'
+              }`}
           >
             <Sun className="w-5 h-5" /> Light
           </button>
@@ -271,15 +269,15 @@ export default function Settings() {
           </div>
 
           {searchResults.length > 0 && (
-            <div className="mt-2 bg-surface-800 border border-zinc-700 rounded-xl overflow-hidden max-h-64 overflow-y-auto">
+            <div className="mt-2 bg-[#111] border border-white/[0.06] rounded-xl overflow-hidden max-h-64 overflow-y-auto">
               {searchResults.map((r, i) => (
                 <button
                   key={`${r.lat}-${r.lon}-${i}`}
                   type="button"
                   onClick={() => handleSelectResult(r)}
-                  className="w-full text-left px-4 py-3 flex items-start gap-3 hover:bg-surface-700 transition-colors border-b border-zinc-700/50 last:border-0"
+                  className="w-full text-left px-4 py-3 flex items-start gap-3 hover:bg-white/5 transition-colors border-b border-white/[0.06] last:border-0"
                 >
-                  <span className="text-primary-neon mt-0.5 shrink-0">
+                  <span className="text-[#3b82f6] mt-0.5 shrink-0">
                     <MapPin className="w-4 h-4" />
                   </span>
                   <span className="text-sm text-zinc-200 leading-snug">{r.display_name}</span>
@@ -301,7 +299,7 @@ export default function Settings() {
           <Crosshair className="w-4 h-4" /> Use my current location
         </button>
 
-        <div className="h-64 rounded-xl overflow-hidden border border-zinc-700">
+        <div className="h-64 rounded-xl overflow-hidden border border-white/[0.06] relative z-0">
           <MapContainer
             center={[gymLat, gymLng]}
             zoom={15}
@@ -352,14 +350,12 @@ export default function Settings() {
           <button
             type="button"
             onClick={() => toggleGeo(!geoEnabled)}
-            className={`w-12 h-7 rounded-full transition-all duration-200 relative ${
-              geoEnabled ? 'btn-tab-active' : 'bg-surface-600'
-            }`}
+            className={`w-12 h-7 rounded-full transition-all duration-200 relative ${geoEnabled ? 'btn-tab-active' : 'bg-[#111] border border-white/[0.06]'
+              }`}
           >
             <div
-              className={`w-5 h-5 rounded-full bg-white absolute top-1 transition-all duration-200 ${
-                geoEnabled ? 'left-6' : 'left-1'
-              }`}
+              className={`w-5 h-5 rounded-full bg-white absolute top-1 transition-all duration-200 ${geoEnabled ? 'left-6' : 'left-1'
+                }`}
             />
           </button>
         </div>

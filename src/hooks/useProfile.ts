@@ -21,15 +21,19 @@ function toAppProfile(row: DbProfile | null): UserProfile | null {
 
 export function useProfile(userId: string | undefined) {
   const [profile, setProfile] = useState<DbProfile | null>(null)
-  const [loading, setLoading] = useState(!!userId)
+  const [fetchedUserId, setFetchedUserId] = useState<string | undefined>(undefined)
+  const [isFetching, setIsFetching] = useState(false)
+
+  const loading = isFetching || (!!userId && fetchedUserId !== userId)
 
   const refetch = useCallback(async () => {
     if (!userId) {
       setProfile(null)
-      setLoading(false)
+      setFetchedUserId(undefined)
+      setIsFetching(false)
       return
     }
-    setLoading(true)
+    setIsFetching(true)
     const { data, error } = await supabase
       .from('profiles')
       .select('*')
@@ -37,7 +41,8 @@ export function useProfile(userId: string | undefined) {
       .single()
     if (error && error.code !== 'PGRST116') console.error(error)
     setProfile(data ?? null)
-    setLoading(false)
+    setFetchedUserId(userId)
+    setIsFetching(false)
   }, [userId])
 
   const updateProfile = useCallback(
@@ -71,7 +76,7 @@ export function useProfile(userId: string | undefined) {
     profile,
     appProfile,
     onboardingCompleted: profile?.onboarding_completed ?? false,
-    lastSeenRoute: profile?.last_seen_route ?? '/',
+    lastSeenRoute: profile?.last_seen_route ?? '/app',
     loading,
     refetch,
     updateProfile,

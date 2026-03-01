@@ -1,5 +1,14 @@
 import { Link } from 'react-router-dom'
-import { Dumbbell, Home, Scale, Flame, ChevronRight, RefreshCw, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react'
+import {
+  Flame,
+  Target,
+  Heartbeat,
+  Barbell,
+  Play,
+  Clock,
+  CaretRight,
+  Lightning
+} from '@phosphor-icons/react'
 import { useAuth } from '../providers/AuthProvider'
 import { useProfile } from '../hooks/useProfile'
 import { useGeneratePlan } from '../hooks/useGeneratePlan'
@@ -11,12 +20,14 @@ import { usePlan } from '../hooks/usePlan'
 import { getTodayWorkoutsFromPlan } from '../data/workouts'
 import { computeBMI, getBMICategory, calorieTarget } from '../lib/bmi'
 
+const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
 export default function Dashboard() {
   const { user } = useAuth()
   const { plan } = usePlan(user?.id)
   const { appProfile } = useProfile(user?.id)
   const { didWorkoutToday } = useWorkoutLogToday(user?.id)
-  const { logs: recentLogs } = useRecentWorkoutLogs(user?.id, 14)
+  const { logs: recentLogs, streak } = useRecentWorkoutLogs(user?.id, 365)
   const weekStart = new Date()
   weekStart.setDate(weekStart.getDate() - weekStart.getDay())
   const weekStartStr = weekStart.toISOString().slice(0, 10)
@@ -30,205 +41,185 @@ export default function Dashboard() {
     ? computeBMI(profile.weightKg, profile.heightCm)
     : 0
   const category = bmi ? getBMICategory(bmi) : '—'
-  const { target: calorieTargetVal, burnTarget } = profile.heightCm && profile.weightKg
+  const { target: calorieTargetVal } = profile.heightCm && profile.weightKg
     ? calorieTarget(profile)
-    : { target: 0, burnTarget: 0 }
+    : { target: 0 }
   const { dailyTotals } = useMealLogs(user?.id)
-  const planCalTarget = (plan?.calorie_targets as Record<string, number> | undefined)?.target ?? 0
 
-  const firstName = profile.name?.split(' ')[0] || 'there'
+  const todayIdx = (new Date().getDay() + 6) % 7
+  const workoutToShow = showGym && gymToday ? gymToday : homeToday
+
+  const todayDateStr = new Date().getDate();
 
   return (
-    <div className="space-y-6">
-      <section>
-        <h2 className="font-display text-2xl font-bold text-zinc-100 mb-1">
-          Hey, {firstName} 👋
-        </h2>
-        <p className="text-zinc-400">
-          {showGym ? "Here's your daily gym plan." : "No gym today? Do a home workout."}
-        </p>
-      </section>
+    <div className="space-y-8 pb-8">
+      {/* Top Widget / Horizon picker */}
+      <div className="flex items-center justify-between gap-4">
+        <div className="glass-card flex items-center gap-2 py-2 px-4 shrink-0 shadow-lg shadow-black/20">
+          <Lightning size={16} weight="fill" className={streak > 0 ? "text-[#ff6b40]" : "text-zinc-500"} />
+          <div className="flex flex-col">
+            <span className="text-[13px] font-bold text-white leading-tight">{streak}</span>
+            <span className="text-[9px] text-zinc-500 font-medium uppercase leading-tight">{streak === 1 ? 'Strike' : 'Strikes'}</span>
+          </div>
+        </div>
 
-      {(plan?.workout_plan?.gym_week?.length || plan?.workout_plan?.home_week?.length) ? (
-        showGym && gymToday ? (
-          <Link
-            to="/workouts?type=gym"
-            className="card block overflow-hidden transition-all duration-200"
-          >
-            <div className="flex items-start gap-4 p-5">
-              {gymToday.imageUrl ? (
-                <img src={gymToday.imageUrl} alt="" className="w-20 h-20 rounded-xl object-cover shrink-0" />
-              ) : (
-                <div className="w-20 h-20 rounded-xl icon-gradient-bg flex items-center justify-center shrink-0">
-                  <Dumbbell className="w-10 h-10 text-white" />
-                </div>
-              )}
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-zinc-100">Today's Gym Workout</h3>
-                <p className="text-sm text-zinc-400 mt-0.5">{gymToday.title}</p>
-                <p className="text-xs text-gradient mt-1">{gymToday.duration}</p>
-              </div>
-              <ChevronRight className="w-5 h-5 text-zinc-500 shrink-0 mt-1" />
+        <div className="flex-1 flex items-center justify-between overflow-x-auto scrollbar-hide gap-3">
+          <div className="flex items-center gap-2 bg-[#84cc16]/10 py-1.5 px-3 rounded-full shrink-0">
+            <div className="w-8 h-8 rounded-full bg-[#84cc16] flex items-center justify-center text-[#0d0f14] font-bold text-xs">
+              {DAYS[todayIdx]}
             </div>
-          </Link>
-        ) : homeToday ? (
-          <Link
-            to="/workouts?type=home"
-            className="card block overflow-hidden transition-all duration-200"
-          >
-            <div className="flex items-start gap-4 p-5">
-              {homeToday.imageUrl ? (
-                <img src={homeToday.imageUrl} alt="" className="w-20 h-20 rounded-xl object-cover shrink-0" />
-              ) : (
-                <div className="w-20 h-20 rounded-xl icon-gradient-bg flex items-center justify-center shrink-0">
-                  <Home className="w-10 h-10 text-white" />
+            <span className="text-xs font-medium text-white pr-1">Time to workout</span>
+          </div>
+
+          <div className="flex items-center gap-4 shrink-0 px-2 opacity-60">
+            {[1, 2, 3].map((offset) => {
+              const idx = (todayIdx + offset) % 7;
+              return (
+                <div key={offset} className="flex flex-col items-center">
+                  <span className="text-xs font-bold text-white mb-0.5">{todayDateStr + offset}</span>
+                  <span className="text-[10px] text-zinc-500">{DAYS[idx]}</span>
                 </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* Statistics Section */}
+      <div>
+        <h2 className="text-lg font-semibold text-white mb-4 tracking-wide">Statistics</h2>
+        <div className="grid grid-cols-2 gap-4">
+          {/* Calories Card */}
+          <Link to="/app/bmi" className="glass-card p-5 group hover:bg-white/[0.02]">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-medium text-zinc-400">Calories</span>
+              <Flame size={18} weight="fill" className="text-[#ffb703] opacity-60 group-hover:opacity-100 transition-opacity" />
+            </div>
+            <p className="text-2xl font-bold text-[#ffb703]">
+              {Math.round(dailyTotals.calories)} <span className="text-sm font-medium text-zinc-500 tracking-normal">Kcal</span>
+            </p>
+          </Link>
+
+          {/* Target Card */}
+          <Link to="/app/bmi" className="glass-card p-5 group hover:bg-white/[0.02]">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-medium text-zinc-400">Target Goal</span>
+              <Target size={18} weight="fill" className="text-zinc-500 opacity-60 group-hover:opacity-100 transition-opacity" />
+            </div>
+            <p className="text-2xl font-bold text-white">
+              {calorieTargetVal || '—'} <span className="text-sm font-medium text-zinc-500 tracking-normal">Kcal</span>
+            </p>
+          </Link>
+
+          {/* BMI Card */}
+          <Link to="/app/bmi" className="glass-card p-5 group hover:bg-white/[0.02]">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-medium text-zinc-400">Curr. BMI</span>
+              <Heartbeat size={18} weight="fill" className="text-[#ff6b40] opacity-60 group-hover:opacity-100 transition-opacity" />
+            </div>
+            <p className="text-2xl font-bold text-[#ff6b40]">
+              {bmi ? bmi.toFixed(1) : '—'} <span className="text-sm font-medium text-[#ff6b40]/60 tracking-normal">{category}</span>
+            </p>
+          </Link>
+
+          {/* Workouts Card */}
+          <div className="glass-card p-5 group hover:bg-white/[0.02]">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-[13px] font-medium text-zinc-400">Workouts</span>
+              <Barbell size={18} weight="fill" className="text-[#84cc16] opacity-60 group-hover:opacity-100 transition-opacity" />
+            </div>
+            <p className="text-2xl font-bold text-white">
+              {weekLogs.length} <span className="text-[#84cc16] font-medium">/ 7</span>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Today's Workout Card */}
+      <div>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-white tracking-wide">Today's Workout</h2>
+          <div className="w-8 h-8 rounded-full bg-white/[0.05] flex items-center justify-center">
+            <span className="text-[#ffb703] text-xl leading-none">★</span>
+          </div>
+        </div>
+
+        {(plan?.workout_plan?.gym_week?.length || plan?.workout_plan?.home_week?.length) && workoutToShow ? (
+          <Link to={showGym && gymToday ? '/app/workouts?type=gym' : '/app/workouts?type=home'} className="block">
+            <div className="glass-card overflow-hidden relative min-h-[220px] p-6 flex flex-col justify-between group">
+              {workoutToShow.imageUrl ? (
+                <>
+                  <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent z-10" />
+                  <img
+                    src={workoutToShow.imageUrl}
+                    alt=""
+                    className="absolute inset-0 w-full h-full object-cover object-right opacity-90 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700"
+                  />
+                </>
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-br from-[#151821] to-[#0d0f14] z-10" />
               )}
-              <div className="flex-1 min-w-0">
-                <h3 className="font-semibold text-zinc-100">Today's Home Workout</h3>
-                <p className="text-sm text-zinc-400 mt-0.5">{homeToday.title}</p>
-                <p className="text-xs text-gradient mt-1">{homeToday.duration}</p>
+
+              <div className="relative z-20 flex-1 flex flex-col items-start justify-center">
+                <div className="backdrop-blur-md bg-white/5 border border-white/10 px-3 py-1.5 rounded-full mb-4">
+                  <span className="text-xs text-zinc-300 font-medium tracking-wide flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#3b82f6]"></span>
+                    {workoutToShow.difficulty || 'Advanced'}
+                  </span>
+                </div>
+
+                <h3 className="font-bold text-white text-3xl leading-none mb-4 w-[60%] drop-shadow-lg">
+                  {workoutToShow.title || 'Full Body Workout'}
+                </h3>
+
+                <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-[#ff6b40] to-[#ff3d00] flex items-center justify-center shadow-[0_0_20px_rgba(255,61,0,0.5)] cursor-pointer hover:scale-110 transition-transform mb-6">
+                  <Play size={24} weight="fill" className="text-white ml-1" />
+                </div>
+
+                <div className="flex items-center gap-4 text-xs font-medium text-zinc-400">
+                  <span className="flex items-center gap-1.5">
+                    <Flame size={14} className="text-[#ff6b40]" />
+                    {(workoutToShow as any).energy || '~1800 Kcal'}
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <Clock size={14} className="text-[#3b82f6]" />
+                    {workoutToShow.duration || '60 min'}
+                  </span>
+                </div>
               </div>
-              <ChevronRight className="w-5 h-5 text-zinc-500 shrink-0 mt-1" />
             </div>
           </Link>
         ) : (
-          <Link
-            to="/workouts"
-            className="card block overflow-hidden transition-all duration-200 p-5"
-          >
-            <h3 className="font-semibold text-zinc-100">View Workout Plan</h3>
-            <p className="text-sm text-zinc-400 mt-0.5">See your AI-generated workouts</p>
-            <ChevronRight className="w-5 h-5 text-zinc-500 shrink-0 mt-1" />
+          <Link to="/app/workouts" className="glass-card block p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-white text-lg">Generate workout plan</h3>
+                <p className="text-sm text-zinc-500 mt-1">Complete setup to get your AI plan</p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                <CaretRight size={20} weight="bold" className="text-[#ff6b40]" />
+              </div>
+            </div>
           </Link>
-        )
-      ) : (
-        <Link
-          to="/workouts"
-          className="card block overflow-hidden transition-all duration-200 p-5"
-        >
-          <h3 className="font-semibold text-zinc-100">Generate your workout plan</h3>
-          <p className="text-sm text-zinc-400 mt-0.5">Complete setup to get your AI plan</p>
-          <ChevronRight className="w-5 h-5 text-zinc-500 shrink-0 mt-1" />
-        </Link>
-      )}
-
-      <div className="card p-4">
-        <div className="flex items-center gap-2 text-zinc-400 mb-1">
-          <TrendingUp className="w-4 h-4" />
-          <span className="text-xs font-medium">Progress</span>
-        </div>
-        <p className="text-lg font-bold text-zinc-100">
-          {weekLogs.length} workout{weekLogs.length !== 1 ? 's' : ''} this week
-        </p>
-        <p className="text-xs text-zinc-500 mt-0.5">
-          {didWorkoutToday ? "Today's workout completed ✓" : 'Keep going!'}
-        </p>
+        )}
       </div>
 
-      {/* Intake Tracker */}
-      {planCalTarget > 0 && dailyTotals.calories > 0 && (
-        <div className="card p-4">
-          {dailyTotals.calories > planCalTarget * 1.1 ? (
-            <div className="flex items-start gap-3">
-              <AlertTriangle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium text-zinc-200">
-                  Over target by {Math.round(dailyTotals.calories - planCalTarget)} kcal
-                </p>
-                <p className="text-xs text-zinc-500 mt-0.5">
-                  Consider a lighter next meal or some extra activity.
-                </p>
-              </div>
-            </div>
-          ) : dailyTotals.calories >= planCalTarget * 0.8 ? (
-            <div className="flex items-start gap-3">
-              <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium text-zinc-200">Nutrition on track</p>
-                <p className="text-xs text-zinc-500 mt-0.5">
-                  {Math.round(dailyTotals.calories)} / {planCalTarget} kcal logged today.
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="flex items-start gap-3">
-              <Flame className="w-5 h-5 text-orange-400 shrink-0 mt-0.5" />
-              <div>
-                <p className="text-sm font-medium text-zinc-200">
-                  {Math.round(planCalTarget - dailyTotals.calories)} kcal remaining
-                </p>
-                <p className="text-xs text-zinc-500 mt-0.5">
-                  {Math.round(dailyTotals.calories)} of {planCalTarget} kcal logged. Keep it up!
-                </p>
-              </div>
-            </div>
-          )}
-        </div>
-      )}
-
-      <div className="grid grid-cols-2 gap-4">
-        <Link to="/bmi" className="card p-4 transition-all duration-200">
-          <div className="flex items-center gap-2 text-zinc-400 mb-1">
-            <Scale className="w-4 h-4" />
-            <span className="text-xs font-medium">BMI</span>
-          </div>
-          <p className="text-2xl font-bold text-gradient">{bmi || '—'}</p>
-          <p className="text-xs text-zinc-500 mt-0.5">{category}</p>
-        </Link>
-        <Link to="/bmi" className="card p-4 transition-all duration-200">
-          <div className="flex items-center gap-2 text-zinc-400 mb-1">
-            <Flame className="w-4 h-4" />
-            <span className="text-xs font-medium">Calories</span>
-          </div>
-          <p className="text-2xl font-bold text-accent-neon">{calorieTargetVal || '—'}</p>
-          <p className="text-xs text-zinc-500 mt-0.5">target · burn {burnTarget}/day</p>
-        </Link>
-      </div>
-
-      <div className="flex gap-3">
-        <Link
-          to="/diet"
-          className="flex-1 btn-primary text-center py-3 rounded-xl font-semibold"
-        >
-          Diet Plan
-        </Link>
-        <Link
-          to="/meal-photo"
-          className="flex-1 btn-secondary text-center py-3 rounded-xl font-semibold"
-        >
-          Log Meal
-        </Link>
-      </div>
-
-      <div className="card p-4">
-        <h3 className="font-semibold text-zinc-200 mb-2">AI plan</h3>
-        <p className="text-sm text-zinc-400 mb-3">
-          Regenerate your workout and diet plan with Groq AI based on your current profile.
-        </p>
+      <div className="pt-4">
         {generateError && (
-          <p className="text-sm text-red-400 mb-2 flex items-center justify-between">
+          <p className="text-sm text-red-400 mb-3 flex items-center justify-between bg-red-400/10 px-4 py-3 rounded-xl">
             <span>{generateError}</span>
-            <button type="button" onClick={clearError} className="text-zinc-500 hover:text-zinc-300">Dismiss</button>
+            <button type="button" onClick={clearError} className="text-zinc-400 hover:text-white font-medium">Dismiss</button>
           </p>
         )}
         <button
           type="button"
-          onClick={() => generate(profileForPlan, recentLogs, true).then(() => window.location.reload()).catch(() => {})}
+          onClick={() => generate(profileForPlan, recentLogs, true).then(() => window.location.reload()).catch(() => { })}
           disabled={generating}
-          className="w-full btn-secondary flex items-center justify-center gap-2 py-2.5 rounded-xl font-medium disabled:opacity-50"
+          className="w-full btn-secondary flex items-center justify-center gap-2 py-3.5 rounded-2xl font-bold shadow-lg disabled:opacity-50 text-[15px] tracking-wide"
         >
-          <RefreshCw className={`w-4 h-4 ${generating ? 'animate-spin' : ''}`} />
-          {generating ? 'Generating plan…' : 'Regenerate plan'}
+          {generating ? 'Generating…' : 'Regenerate AI Plan'}
         </button>
       </div>
-
-      <Link
-        to="/motivation"
-        className="block card p-4 text-center text-zinc-400 hover:text-white transition-all duration-200"
-      >
-        Need a push? Get motivated →
-      </Link>
     </div>
   )
 }

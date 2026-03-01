@@ -17,7 +17,7 @@ export default function Login() {
     try {
       const { error: err } = await supabase.auth.signInWithPassword({ email, password })
       if (err) throw err
-      navigate('/', { state: { fromLogin: true } })
+      navigate('/app', { state: { fromLogin: true } })
     } catch (e) {
       setError(getAuthErrorMessage(e, 'Login failed'))
     } finally {
@@ -26,7 +26,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 bg-surface-900">
+    <div className="min-h-screen flex items-center justify-center px-4 bg-black">
       <div className="w-full max-w-sm card p-6">
         <h1 className="font-display text-2xl font-bold text-zinc-100 mb-1">Welcome back</h1>
         <p className="text-zinc-400 text-sm mb-6">Sign in to UeiDo</p>
@@ -68,7 +68,7 @@ export default function Login() {
         </form>
         <p className="mt-4 text-center text-zinc-400 text-sm">
           Don't have an account?{' '}
-          <Link to="/signup" className="text-gradient hover:opacity-80">Sign up</Link>
+          <Link to="/signup" className="text-[#ff3d00] hover:text-[#ff5722]">Sign up</Link>
         </p>
       </div>
     </div>

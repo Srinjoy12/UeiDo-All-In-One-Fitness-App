@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Camera, Utensils, Flame, Beef, Wheat, Droplets, Leaf } from 'lucide-react'
+import { Camera, ForkKnife, Flame, Fish, Cookie, Drop, Leaf } from '@phosphor-icons/react'
 import { useAuth } from '../providers/AuthProvider'
 import { usePlan } from '../hooks/usePlan'
 import { useMealLogs } from '../hooks/useMealLogs'
@@ -105,7 +105,7 @@ export default function MealPhoto() {
   return (
     <div className="space-y-6">
       <section>
-        <h2 className="font-display text-2xl font-bold text-zinc-100">Log Meal</h2>
+        <h2 className="font-display text-3xl font-bold text-zinc-100 tracking-tight">Log Meal</h2>
         <p className="text-zinc-400 text-sm mt-1">
           Snap a photo of your meal for AI-powered nutrition analysis.
         </p>
@@ -113,28 +113,23 @@ export default function MealPhoto() {
 
       {/* Daily Progress */}
       {calorieTarget > 0 && (
-        <div className="card p-4">
+        <div className="card p-5">
           <div className="flex items-center justify-between mb-2">
             <span className="text-sm font-medium text-zinc-300">Today's Intake</span>
-            <span className="text-sm text-zinc-400">
-              {Math.round(dailyTotals.calories)} / {calorieTarget} kcal
+            <span className="text-sm font-semibold text-zinc-100">
+              {Math.round(dailyTotals.calories)} <span className="text-zinc-500 font-normal">/ {calorieTarget} kcal</span>
             </span>
           </div>
-          <div className="h-2.5 bg-surface-700 rounded-full overflow-hidden">
+          <div className="h-2 rounded-full bg-white/5 overflow-hidden">
             <div
-              className="h-full rounded-full transition-all duration-500"
-              style={{
-                width: `${pctCalories}%`,
-                background: pctCalories > 100
-                  ? '#ef4444'
-                  : 'linear-gradient(90deg, #0500ff, #ff3d00)',
-              }}
+              className="h-full rounded-full bg-[#ff3d00] transition-all duration-500"
+              style={{ width: `${Math.min(100, pctCalories)}%` }}
             />
           </div>
           <div className="flex gap-4 mt-3 text-xs text-zinc-400">
-            <span className="flex items-center gap-1"><Beef className="w-3.5 h-3.5" /> {Math.round(dailyTotals.protein_g)}g protein</span>
-            <span className="flex items-center gap-1"><Wheat className="w-3.5 h-3.5" /> {Math.round(dailyTotals.carbs_g)}g carbs</span>
-            <span className="flex items-center gap-1"><Droplets className="w-3.5 h-3.5" /> {Math.round(dailyTotals.fat_g)}g fat</span>
+            <span className="flex items-center gap-1"><Fish size={14} weight="regular" /> {Math.round(dailyTotals.protein_g)}g protein</span>
+            <span className="flex items-center gap-1"><Cookie size={14} weight="regular" /> {Math.round(dailyTotals.carbs_g)}g carbs</span>
+            <span className="flex items-center gap-1"><Drop size={14} weight="regular" /> {Math.round(dailyTotals.fat_g)}g fat</span>
           </div>
         </div>
       )}
@@ -146,9 +141,8 @@ export default function MealPhoto() {
             key={t}
             type="button"
             onClick={() => setMealType(t)}
-            className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all duration-200 capitalize ${
-              mealType === t ? 'btn-tab-active' : 'bg-surface-800 text-zinc-400 hover:text-zinc-200'
-            }`}
+            className={`flex-1 py-2 rounded-xl text-sm font-medium transition-all duration-200 capitalize ${mealType === t ? 'btn-tab-active' : 'bg-[#111] text-zinc-500 hover:text-white border border-white/[0.06]'
+              }`}
           >
             {t}
           </button>
@@ -169,7 +163,7 @@ export default function MealPhoto() {
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={uploading}
-          className="w-full flex flex-col items-center justify-center gap-3 py-8 rounded-xl border-2 border-dashed border-zinc-600 hover:border-zinc-400 hover:bg-surface-700/50 transition-all duration-200 disabled:opacity-50"
+          className="w-full flex flex-col items-center justify-center gap-3 py-10 rounded-2xl border-2 border-dashed border-white/10 hover:border-[#3b82f6]/50 transition-all duration-200 disabled:opacity-50"
         >
           {uploading ? (
             <div className="flex flex-col items-center gap-2">
@@ -178,8 +172,8 @@ export default function MealPhoto() {
             </div>
           ) : (
             <>
-              <div className="w-14 h-14 rounded-full icon-gradient-bg flex items-center justify-center">
-                <Camera className="w-7 h-7 text-white" />
+              <div className="w-16 h-16 rounded-2xl bg-[#3b82f6]/20 flex items-center justify-center">
+                <Camera size={32} weight="regular" className="text-[#3b82f6]" />
               </div>
               <span className="font-medium text-zinc-200">Take or upload a photo</span>
               <span className="text-sm text-zinc-500">AI will estimate calories, protein, carbs & more</span>
@@ -188,7 +182,7 @@ export default function MealPhoto() {
         </button>
 
         {preview && (
-          <div className="mt-4 rounded-xl overflow-hidden border border-zinc-700">
+          <div className="mt-4 rounded-xl overflow-hidden border border-white/[0.06]">
             <img src={preview} alt="Meal preview" className="w-full h-48 object-cover" />
           </div>
         )}
@@ -202,14 +196,14 @@ export default function MealPhoto() {
       {result && (
         <div className="card p-5 space-y-4">
           <h3 className="font-semibold text-zinc-100 flex items-center gap-2">
-            <Utensils className="w-5 h-5" /> Analysis Result
+            <ForkKnife size={20} weight="regular" /> Analysis Result
           </h3>
           <p className="text-sm text-zinc-400">{result.description}</p>
 
           {result.foods.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {result.foods.map((f, i) => (
-                <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-surface-700 text-zinc-300 border border-zinc-700/50">
+                <span key={i} className="text-xs px-2.5 py-1 rounded-full bg-[#111] text-zinc-300 border border-white/[0.06]">
                   {f}
                 </span>
               ))}
@@ -217,23 +211,23 @@ export default function MealPhoto() {
           )}
 
           <div className="grid grid-cols-2 gap-3">
-            <div className="bg-surface-700/50 rounded-xl p-3 text-center">
-              <Flame className="w-5 h-5 mx-auto mb-1 text-orange-400" />
+            <div className="bg-[#111] rounded-xl p-3 text-center border border-white/[0.06]">
+              <Flame size={20} weight="fill" className="mx-auto mb-1 text-[#ff3d00]" />
               <p className="text-lg font-bold text-zinc-100">{Math.round(result.calories)}</p>
               <p className="text-xs text-zinc-500">kcal</p>
             </div>
-            <div className="bg-surface-700/50 rounded-xl p-3 text-center">
-              <Beef className="w-5 h-5 mx-auto mb-1 text-red-400" />
+            <div className="bg-[#111] rounded-xl p-3 text-center border border-white/[0.06]">
+              <Fish size={20} weight="regular" className="mx-auto mb-1 text-red-400" />
               <p className="text-lg font-bold text-zinc-100">{Math.round(result.protein_g)}g</p>
               <p className="text-xs text-zinc-500">Protein</p>
             </div>
-            <div className="bg-surface-700/50 rounded-xl p-3 text-center">
-              <Wheat className="w-5 h-5 mx-auto mb-1 text-yellow-400" />
+            <div className="bg-[#111] rounded-xl p-3 text-center border border-white/[0.06]">
+              <Cookie size={20} weight="regular" className="mx-auto mb-1 text-yellow-400" />
               <p className="text-lg font-bold text-zinc-100">{Math.round(result.carbs_g)}g</p>
               <p className="text-xs text-zinc-500">Carbs</p>
             </div>
-            <div className="bg-surface-700/50 rounded-xl p-3 text-center">
-              <Leaf className="w-5 h-5 mx-auto mb-1 text-emerald-400" />
+            <div className="bg-[#111] rounded-xl p-3 text-center border border-white/[0.06]">
+              <Leaf size={20} weight="regular" className="mx-auto mb-1 text-emerald-400" />
               <p className="text-lg font-bold text-zinc-100">{Math.round(result.fat_g)}g</p>
               <p className="text-xs text-zinc-500">Fat</p>
             </div>
@@ -250,7 +244,7 @@ export default function MealPhoto() {
               <li key={m.id} className="card p-4 flex justify-between items-center gap-4">
                 <div className="min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-surface-700 text-zinc-400 capitalize">{m.meal_type}</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-[#111] text-zinc-400 capitalize">{m.meal_type}</span>
                     <span className="font-medium text-zinc-200">{Math.round(m.calories)} kcal</span>
                   </div>
                   <p className="text-xs text-zinc-500 mt-0.5 truncate">{m.description}</p>

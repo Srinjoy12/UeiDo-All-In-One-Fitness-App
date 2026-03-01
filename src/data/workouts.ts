@@ -7,13 +7,13 @@ const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 
 
 // Images for AI-generated workouts (matched by workout type/title)
 const IMAGES = {
-  push: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80',
-  pull: 'https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=400&q=80',
-  legs: 'https://images.unsplash.com/photo-1549060279-7e168fcee0c2?w=400&q=80',
-  upper: 'https://images.unsplash.com/photo-1581009146145-b5ef050c149e?w=400&q=80',
-  cardio: 'https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&q=80',
-  home: 'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=400&q=80',
-  hiit: 'https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&q=80',
+  push: '/bodybuilder pictures/Gemini_Generated_Image_9rvbt09rvbt09rvb.png',
+  pull: '/bodybuilder pictures/Gemini_Generated_Image_ebzh7uebzh7uebzh.png',
+  legs: '/bodybuilder pictures/Gemini_Generated_Image_kwgtu8kwgtu8kwgt.png',
+  upper: '/bodybuilder pictures/Gemini_Generated_Image_qenq2gqenq2gqenq.png',
+  cardio: '/bodybuilder pictures/Gemini_Generated_Image_sa1fu4sa1fu4sa1f.png',
+  home: '/bodybuilder pictures/Gemini_Generated_Image_9rvbt09rvbt09rvb.png',
+  hiit: '/bodybuilder pictures/Gemini_Generated_Image_ebzh7uebzh7uebzh.png',
 }
 
 export function getWorkoutImageUrl(workout: { type: string; dayLabel?: string; title?: string }): string | undefined {

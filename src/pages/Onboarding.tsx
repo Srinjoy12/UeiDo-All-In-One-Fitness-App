@@ -77,7 +77,7 @@ export default function Onboarding() {
         experienceLevel: (profile.experienceLevel as UserProfile['experienceLevel']) ?? 'intermediate',
       }
       await generate(fullProfile, [])
-      navigate('/')
+      navigate('/app')
     } catch (e) {
       setSaveError(e instanceof Error ? e.message : 'Something went wrong')
     } finally {
@@ -89,7 +89,7 @@ export default function Onboarding() {
   const error = saveError || generateError
 
   return (
-    <div className="min-h-screen px-4 py-8 bg-surface-900">
+    <div className="min-h-screen px-4 py-8 bg-black">
       <div className="max-w-md mx-auto">
         <h1 className="font-display text-2xl font-bold text-zinc-100 mb-1">Set up your profile</h1>
         <p className="text-zinc-400 text-sm mb-6">We'll use this to build your personal plan.</p>
