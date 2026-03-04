@@ -16,6 +16,7 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Onboarding from './pages/Onboarding'
 import Landing from './pages/Landing'
+import AuthCallback from './pages/AuthCallback'
 
 function App() {
   useReminderNotifications()
@@ -29,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/auth/callback" element={<AuthCallback />} />
         <Route path="/onboarding" element={<Onboarding />} />
         <Route path="/" element={<Landing />} />
         <Route

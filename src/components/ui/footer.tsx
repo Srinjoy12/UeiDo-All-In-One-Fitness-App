@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Dumbbell } from "lucide-react";
 import { ShimmerButton } from "./shimmer-button";
 
 function Footer() {
@@ -10,10 +9,8 @@ function Footer() {
                     {/* Brand Column */}
                     <div className="mb-8 md:mb-0 max-w-sm">
                         <Link to="/" className="flex items-center gap-3 mb-4">
-                            <div className="w-10 h-10 rounded-xl bg-[#ff6b40] flex items-center justify-center">
-                                <Dumbbell className="w-5 h-5 text-white" />
-                            </div>
-                            <h2 className="text-xl font-black text-white uppercase tracking-tighter">UeiDo</h2>
+                            <img src="/logo.png" alt="UeiDo Logo" className="w-10 h-10 rounded-xl object-contain" />
+                            <h2 className="text-xl font-black text-white tracking-tighter">UeiDo</h2>
                         </Link>
 
                         <p className="text-white/40 text-sm leading-relaxed mb-6">
@@ -122,7 +119,7 @@ function Footer() {
 
                 {/* Giant Brand Name */}
                 <div className="w-full flex mt-16 items-center justify-center">
-                    <h1 className="text-center text-5xl md:text-7xl lg:text-[12rem] font-black bg-clip-text text-transparent bg-gradient-to-b from-white/[0.08] to-white/[0.02] select-none uppercase tracking-tighter leading-none">
+                    <h1 className="text-center text-5xl md:text-7xl lg:text-[12rem] font-black bg-clip-text text-transparent bg-gradient-to-b from-white/[0.08] to-white/[0.02] select-none tracking-tighter leading-none">
                         UeiDo
                     </h1>
                 </div>

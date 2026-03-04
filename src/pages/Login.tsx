@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabaseClient'
 import { getAuthErrorMessage } from '../lib/authErrors'
+import SocialAuthButtons from '../components/SocialAuthButtons'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -28,8 +29,16 @@ export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center px-4 bg-black">
       <div className="w-full max-w-sm card p-6">
+        <img src="/logo.png" alt="UeiDo Logo" className="w-16 h-16 mx-auto mb-4 object-contain" />
         <h1 className="font-display text-2xl font-bold text-zinc-100 mb-1">Welcome back</h1>
         <p className="text-zinc-400 text-sm mb-6">Sign in to UeiDo</p>
+
+        <SocialAuthButtons />
+
+        <div className="auth-divider">
+          <span>or sign in with email</span>
+        </div>
+
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm text-zinc-400 mb-1">Email</label>
