@@ -5,6 +5,7 @@ import { HeroScrollCanvas } from '../components/ui/hero-scroll-canvas'
 import { RulerCarousel, type CarouselItem } from '../components/ui/ruler-carousel'
 import { FeaturesSection } from '../components/ui/features-section'
 import { HowItWorks } from '../components/ui/how-it-works'
+import GlobeFeatureSection from '../components/ui/globe-feature-section'
 import { ComparisonFeatures } from '../components/ui/comparison-features'
 import { Footer } from '../components/ui/footer'
 import { useAuth } from '../providers/AuthProvider'
@@ -50,6 +51,9 @@ export default function Landing() {
 
             {/* How It Works — Timeline Section */}
             <HowItWorks />
+
+            {/* Global Gym Tracking Feature */}
+            <GlobeFeatureSection />
 
             {/* Why UeiDo Stands Out — Comparison Section */}
             <ComparisonFeatures />

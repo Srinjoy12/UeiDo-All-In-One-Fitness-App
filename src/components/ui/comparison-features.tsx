@@ -41,7 +41,7 @@ export function ComparisonFeatures() {
                 <div className="mt-20">
 
                     {/* Unified Grid Container */}
-                    <div className="grid grid-cols-[1fr_120px_120px] md:grid-cols-[1fr_180px_180px] w-full">
+                    <div className="grid grid-cols-[1fr_80px_80px] sm:grid-cols-[1fr_100px_100px] md:grid-cols-[1fr_180px_180px] w-full">
 
                         {/* --- HEADERS --- */}
                         <div className="pb-6"></div> {/* Empty top-left */}
@@ -50,15 +50,15 @@ export function ComparisonFeatures() {
                         <div className="flex flex-col justify-center items-center pb-6 relative gap-2">
                             {/* Highlight Top Extension */}
                             <div className="absolute inset-0 bg-white/[0.04] rounded-t-3xl -z-10" />
-                            <img src="/logo.png" alt="UeiDo Logo" className="w-8 h-8 object-contain" />
-                            <h3 className="text-xl md:text-2xl font-black text-white tracking-tighter">
+                            <img src="/logo.png" alt="UeiDo Logo" className="w-6 h-6 md:w-8 md:h-8 object-contain" />
+                            <h3 className="text-sm sm:text-lg md:text-2xl font-black text-white tracking-tighter">
                                 UeiDo
                             </h3>
                         </div>
 
                         {/* Other Apps Header */}
                         <div className="flex justify-center items-end pb-6">
-                            <h3 className="text-sm font-semibold text-white/40 uppercase tracking-wider">
+                            <h3 className="text-[10px] sm:text-xs md:text-sm font-semibold text-white/40 uppercase tracking-widest md:tracking-wider text-center px-1">
                                 Other Apps
                             </h3>
                         </div>
@@ -71,40 +71,40 @@ export function ComparisonFeatures() {
                                 <React.Fragment key={i}>
                                     {/* Feature Name */}
                                     <div className={cn(
-                                        "py-4 px-4 md:px-8 bg-white/[0.02] flex items-center",
+                                        "py-3 px-2 sm:px-4 md:py-4 md:px-8 bg-white/[0.02] flex items-center",
                                         i === 0 && "rounded-tl-2xl border-t border-white/5",
                                         isLast && "rounded-bl-2xl border-b border-white/5",
                                         !isLast && "border-b border-white/5",
                                     )}>
-                                        <span className="text-white/70 text-sm md:text-base font-medium">
+                                        <span className="text-white/70 text-xs sm:text-sm md:text-base font-medium leading-tight">
                                             {f.name}
                                         </span>
                                     </div>
 
                                     {/* UeiDo Check (Highlighted) */}
                                     <div className={cn(
-                                        "flex justify-center items-center py-4 relative bg-white/[0.04] z-10"
+                                        "flex justify-center items-center py-3 md:py-4 relative bg-white/[0.04] z-10"
                                     )}>
                                         {f.us ? (
-                                            <div className="w-8 h-8 rounded-full bg-[#ff6b40]/20 flex items-center justify-center">
-                                                <Check className="w-5 h-5 text-[#ff6b40]" strokeWidth={3} />
+                                            <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-[#ff6b40]/20 flex items-center justify-center">
+                                                <Check className="w-4 h-4 md:w-5 md:h-5 text-[#ff6b40]" strokeWidth={3} />
                                             </div>
                                         ) : (
-                                            <X className="w-5 h-5 text-white/20" />
+                                            <X className="w-4 h-4 md:w-5 md:h-5 text-white/20" />
                                         )}
                                     </div>
 
                                     {/* Other Apps Check */}
                                     <div className={cn(
-                                        "flex justify-center items-center py-4 bg-white/[0.02]",
+                                        "flex justify-center items-center py-3 md:py-4 bg-white/[0.02]",
                                         i === 0 && "rounded-tr-2xl border-t border-white/5",
                                         isLast && "rounded-br-2xl border-b border-white/5",
                                         !isLast && "border-b border-white/5"
                                     )}>
                                         {f.others ? (
-                                            <Check className="w-5 h-5 text-white/40" />
+                                            <Check className="w-4 h-4 md:w-5 md:h-5 text-white/40" />
                                         ) : (
-                                            <X className="w-5 h-5 text-white/20" />
+                                            <X className="w-4 h-4 md:w-5 md:h-5 text-white/20" />
                                         )}
                                     </div>
                                 </React.Fragment>

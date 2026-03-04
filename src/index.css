@@ -298,6 +298,19 @@
   right: 0;
 }
 
+@media (max-width: 768px) {
+
+  .hero-scroll-beat--left,
+  .hero-scroll-beat--right {
+    align-items: center;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+  }
+}
+
 .hero-scroll-beat__headline {
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 900;
