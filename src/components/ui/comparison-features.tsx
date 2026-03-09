@@ -22,13 +22,7 @@ export function ComparisonFeatures() {
             <div className="max-w-4xl mx-auto relative z-10">
                 {/* Header Section */}
                 <div className="text-center mb-16">
-                    <div className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6">
-                        <span className="text-xs font-bold uppercase tracking-widest text-[#ff6b40]">
-                            <span className="normal-case">UeiDo</span> vs Others
-                        </span>
-                    </div>
-
-                    <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter leading-none mb-6">
+                    <h2 className="text-5xl md:text-8xl font-black text-white uppercase tracking-tighter leading-none mb-6 drop-shadow-[0_4px_20px_rgba(0,0,0,0.5)]">
                         Why <span className="normal-case">UeiDo</span> stands out
                     </h2>
 
@@ -110,29 +104,22 @@ export function ComparisonFeatures() {
                                 </React.Fragment>
                             );
                         })}
+                    </div>
 
-                        {/* --- FOOTER CTA --- */}
-                        <div></div> {/* Empty bottom-left */}
-
-                        {/* UeiDo CTA (Highlighted) */}
-                        <div className="flex justify-center pt-8 pb-10 relative">
-                            {/* Highlight Bottom Extension */}
-                            <div className="absolute inset-0 bg-white/[0.04] rounded-b-3xl -z-10" />
-                            <Link to="/signup" className="relative z-10 w-full px-6">
-                                <ShimmerButton
-                                    background="rgba(255, 107, 64, 1)"
-                                    shimmerColor="#ffffff"
-                                    shimmerSize="0.05em"
-                                    className="w-full py-3 shadow-xl"
-                                >
-                                    <span className="text-xs font-bold uppercase tracking-wider text-white">
-                                        Start Now
-                                    </span>
-                                </ShimmerButton>
-                            </Link>
-                        </div>
-
-                        <div></div> {/* Empty bottom-right */}
+                    {/* CTA Button — Full width, below the grid */}
+                    <div className="flex justify-center mt-10">
+                        <Link to="/signup" className="w-full max-w-xs">
+                            <ShimmerButton
+                                background="rgba(255, 107, 64, 1)"
+                                shimmerColor="#ffffff"
+                                shimmerSize="0.05em"
+                                className="w-full py-3 shadow-xl"
+                            >
+                                <span className="text-xs font-bold uppercase tracking-wider text-white">
+                                    Start Now
+                                </span>
+                            </ShimmerButton>
+                        </Link>
                     </div>
 
                 </div>

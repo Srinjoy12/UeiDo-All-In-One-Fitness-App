@@ -82,7 +82,7 @@ export default function Layout() {
 
   return (
     <div className="min-h-screen flex flex-col pb-28">
-      <header className="sticky top-0 z-10 bg-transparent pt-4">
+      <header className="sticky top-0 z-10 bg-black/60 backdrop-blur-xl border-b border-white/5 pt-4">
         <div className="max-w-lg mx-auto px-6 py-2 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center backdrop-blur-md">
@@ -96,6 +96,7 @@ export default function Layout() {
           <div className="flex items-center gap-3">
             <button
               type="button"
+              onClick={() => navigate('/app/reminders')}
               className="p-2.5 text-zinc-400 hover:text-white rounded-xl transition-all hover:bg-white/5 relative"
               aria-label="Notifications"
             >

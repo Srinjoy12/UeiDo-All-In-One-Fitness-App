@@ -1,7 +1,8 @@
 "use client";
 
-import { Button } from "../ui/button";
-import { ArrowRight, MapPin } from "lucide-react";
+import { ShimmerButton } from "./shimmer-button";
+import { Link } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 import createGlobe, { type COBEOptions } from "cobe"
 import { useCallback, useEffect, useRef, useState } from "react"
 import { cn } from "../../lib/utils"
@@ -11,19 +12,25 @@ export default function GlobeFeatureSection() {
         <section className="relative w-full mx-auto overflow-hidden rounded-[3rem] bg-[#111] border border-white/10 shadow-md px-6 py-16 md:px-16 md:py-24 mt-24 mb-24 max-w-7xl">
             <div className="flex flex-col-reverse items-center justify-between gap-10 md:flex-row">
                 <div className="z-10 max-w-xl text-left">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[#ff6b40] text-sm font-medium mb-6">
-                        <MapPin className="w-4 h-4" /> Global Gym Tracking
-                    </div>
                     <h1 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter leading-tight mb-6">
-                        Train Anywhere. <span className="text-white/40">We Track It.</span>
+                        "THE WORLD IS YOUR <span className="text-white/40">GYM.</span><br />
+                        <span className="text-[#ff6b40]">CONQUER EVERY CORNER."</span>
                     </h1>
                     <p className="text-white/60 text-base md:text-lg mb-8 font-medium max-w-lg">
-                        "Your discipline shouldn't stop when you travel." <br className="hidden md:block" />
-                        Check into any gym worldwide. UeiDo tracks your global heatmap, saving your favorite spots and workout streaks no matter what city you're crushing it in.
+                        Never let geography be an excuse. Whether you're in a local garage gym or a foreign city, check-in instantly. UeiDo tracks your coordinates to build a living heatmap of your global supremacy. Your territory. Your rules.
                     </p>
-                    <Button className="inline-flex items-center gap-2 rounded-full bg-[#ff6b40] hover:bg-[#ff6b40]/80 text-white px-8 py-6 text-sm font-bold uppercase tracking-wider transition-all shadow-[0_0_20px_rgba(255,107,64,0.3)] hover:shadow-[0_0_30px_rgba(255,107,64,0.5)] border-none">
-                        Start Tracking <ArrowRight className="h-5 w-5" />
-                    </Button>
+                    <Link to="/signup">
+                        <ShimmerButton
+                            background="rgba(255, 107, 64, 1)"
+                            shimmerColor="#ffffff"
+                            shimmerSize="0.05em"
+                            className="shadow-[0_0_20px_rgba(255,107,64,0.3)] hover:shadow-[0_0_30px_rgba(255,107,64,0.5)] transition-shadow"
+                        >
+                            <span className="flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-white">
+                                Map Your Territory <ArrowRight className="w-5 h-5" />
+                            </span>
+                        </ShimmerButton>
+                    </Link>
                 </div>
                 <div className="relative h-[200px] md:h-[400px] w-full max-w-xl">
                     <Globe className="absolute -bottom-10 md:-bottom-20 md:-right-20 scale-[1.3] md:scale-150" />

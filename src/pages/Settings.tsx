@@ -1,11 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { Sun, Moon, MapPin, Navigation, LogOut, User, Crosshair, Search, Loader2 } from 'lucide-react'
+import { MapPin, Navigation, LogOut, User, Crosshair, Search, Loader2 } from 'lucide-react'
 import { MapContainer, TileLayer, Marker, useMap, useMapEvents } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import { useAuth } from '../providers/AuthProvider'
 import { useProfile } from '../hooks/useProfile'
-import { useTheme } from '../hooks/useTheme'
 import { supabase } from '../lib/supabaseClient'
 
 type SearchResult = { lat: string; lon: string; display_name: string }
@@ -57,7 +56,6 @@ function DraggableMarker({
 export default function Settings() {
   const { user, signOut } = useAuth()
   const { profile: dbProfile, refetch: refetchProfile } = useProfile(user?.id)
-  const { theme, setTheme } = useTheme()
 
   const [gymLat, setGymLat] = useState<number>(dbProfile?.gym_lat ?? 28.6139)
   const [gymLng, setGymLng] = useState<number>(dbProfile?.gym_lng ?? 77.209)
@@ -191,12 +189,6 @@ export default function Settings() {
     await refetchProfile()
   }
 
-  async function handleThemeChange(t: 'dark' | 'light') {
-    setTheme(t)
-    if (user?.id) {
-      await supabase.from('profiles').update({ theme: t }).eq('user_id', user.id)
-    }
-  }
 
   return (
     <div className="space-y-6">
@@ -212,29 +204,6 @@ export default function Settings() {
         <div className="text-sm text-zinc-400">
           <p>{dbProfile?.name || 'User'}</p>
           <p className="text-zinc-500">{user?.email}</p>
-        </div>
-      </div>
-
-      {/* Theme */}
-      <div className="card p-5 space-y-3">
-        <h3 className="font-semibold text-zinc-200">Theme</h3>
-        <div className="flex gap-2">
-          <button
-            type="button"
-            onClick={() => handleThemeChange('dark')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-medium transition-all ${theme === 'dark' ? 'btn-tab-active' : 'bg-[#111] text-zinc-500 hover:text-white border border-white/[0.06]'
-              }`}
-          >
-            <Moon className="w-5 h-5" /> Dark
-          </button>
-          <button
-            type="button"
-            onClick={() => handleThemeChange('light')}
-            className={`flex-1 flex items-center justify-center gap-2 py-3 rounded-xl font-medium transition-all ${theme === 'light' ? 'btn-tab-active' : 'bg-[#111] text-zinc-500 hover:text-white border border-white/[0.06]'
-              }`}
-          >
-            <Sun className="w-5 h-5" /> Light
-          </button>
         </div>
       </div>
 

@@ -1,11 +1,12 @@
 import { Navigate } from 'react-router-dom'
-import { Home, Briefcase, Dumbbell } from 'lucide-react'
+import { Home, Briefcase, Dumbbell, BarChart3, Sparkles } from 'lucide-react'
 import { NavBar } from '../components/ui/tubelight-navbar'
 import { HeroScrollCanvas } from '../components/ui/hero-scroll-canvas'
 import { RulerCarousel, type CarouselItem } from '../components/ui/ruler-carousel'
 import { FeaturesSection } from '../components/ui/features-section'
 import { HowItWorks } from '../components/ui/how-it-works'
 import GlobeFeatureSection from '../components/ui/globe-feature-section'
+import { FeatureImageComparison } from '../components/ui/feature-with-image-comparison'
 import { ComparisonFeatures } from '../components/ui/comparison-features'
 import { Footer } from '../components/ui/footer'
 import { useAuth } from '../providers/AuthProvider'
@@ -31,7 +32,9 @@ export default function Landing() {
 
     const navItems = [
         { name: 'Home', url: '#', icon: Home },
+        { name: 'Features', url: '#features', icon: Sparkles },
         { name: 'How It Works', url: '#how-it-works', icon: Briefcase },
+        { name: 'Results', url: '#results', icon: BarChart3 },
         { name: 'Get Started', url: '/signup', icon: Dumbbell }
     ]
 
@@ -54,6 +57,9 @@ export default function Landing() {
 
             {/* Global Gym Tracking Feature */}
             <GlobeFeatureSection />
+
+            {/* Before / After Image Comparison */}
+            <FeatureImageComparison />
 
             {/* Why UeiDo Stands Out — Comparison Section */}
             <ComparisonFeatures />

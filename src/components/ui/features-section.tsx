@@ -27,7 +27,7 @@ function MarqueeRow({ text, direction, duration, opacity }: { text: string; dire
 
 export function FeaturesSection() {
     return (
-        <div className="py-16 relative z-0 overflow-hidden flex flex-col items-center justify-center" id="features" style={{ background: '#e65100', borderRadius: '3rem', minHeight: '80vh' }}>
+        <div className="py-16 md:min-h-[80vh] relative z-0 overflow-hidden flex flex-col items-center justify-center" id="features" style={{ background: '#e65100', borderRadius: '3rem' }}>
 
             {/* Infinite Slider Background Text */}
             <div className="absolute inset-0 flex flex-col justify-center select-none z-0 gap-2" style={{ fontSize: 'clamp(4rem, 10vw, 12rem)' }}>
