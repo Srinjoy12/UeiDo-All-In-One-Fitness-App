@@ -73,12 +73,12 @@ export default function Reminders() {
             onChange={(e) => setLabel(e.target.value)}
           />
         </div>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className="text-sm text-zinc-400 block mb-1">Time</label>
             <input
               type="time"
-              className="input"
+              className="input w-full"
               value={time}
               onChange={(e) => setTime(e.target.value)}
             />
@@ -86,7 +86,7 @@ export default function Reminders() {
           <div>
             <label className="text-sm text-zinc-400 block mb-1">Type</label>
             <select
-              className="input"
+              className="input w-full"
               value={type}
               onChange={(e) => setType(e.target.value as Reminder['type'])}
             >

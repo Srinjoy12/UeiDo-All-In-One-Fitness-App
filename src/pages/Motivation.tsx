@@ -4,16 +4,20 @@ import { Lightbulb, RefreshCw, Quote } from 'lucide-react'
 import { QUOTES, TIPS } from '../data/motivation'
 
 const backgrounds = [
+  '/bodybuilder pictures/Gemini_Generated_Image_8cobrf8cobrf8cob.png',
   '/bodybuilder pictures/Gemini_Generated_Image_9rvbt09rvbt09rvb.png',
   '/bodybuilder pictures/Gemini_Generated_Image_ebzh7uebzh7uebzh.png',
+  '/bodybuilder pictures/Gemini_Generated_Image_k9z6hfk9z6hfk9z6.png',
   '/bodybuilder pictures/Gemini_Generated_Image_kwgtu8kwgtu8kwgt.png',
+  '/bodybuilder pictures/Gemini_Generated_Image_p2dmntp2dmntp2dm.png',
+  '/bodybuilder pictures/Gemini_Generated_Image_pd0zappd0zappd0z.png',
   '/bodybuilder pictures/Gemini_Generated_Image_qenq2gqenq2gqenq.png',
   '/bodybuilder pictures/Gemini_Generated_Image_sa1fu4sa1fu4sa1f.png',
-  '/bodybuilder pictures/Gemini_Generated_Image_8cobrf8cobrf8cob.png',
-  '/bodybuilder pictures/Gemini_Generated_Image_k9z6hfk9z6hfk9z6.png',
-  '/bodybuilder pictures/Gemini_Generated_Image_p2dmntp2dmntp2dm.png',
   '/bodybuilder pictures/Gemini_Generated_Image_v9hsz1v9hsz1v9hs.png',
   '/bodybuilder pictures/Gemini_Generated_Image_wl6gn0wl6gn0wl6g.png',
+  '/bodybuilder pictures/after.png',
+  '/bodybuilder pictures/before.png',
+  '/bodybuilder pictures/guy-light-body-caucasian-abdominal.jpg'
 ]
 
 function pickRandom<T>(arr: T[], exclude?: T): T {
@@ -42,7 +46,7 @@ export default function Motivation() {
   }, [])
 
   return (
-    <div className="relative -mx-4 -mt-6 -mb-28 min-h-screen overflow-hidden flex flex-col justify-end pb-32 pt-20 px-4">
+    <div className="relative -mx-4 -mt-6 -mb-28 min-h-screen overflow-hidden flex flex-col justify-end pb-48 pt-20 px-4">
       {/* Background Image — crossfade */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -52,7 +56,7 @@ export default function Motivation() {
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: 'easeOut' }}
           className="absolute inset-0 bg-cover bg-center z-0"
-          style={{ backgroundImage: `url(${bg})` }}
+          style={{ backgroundImage: `url('${bg}')` }}
         />
       </AnimatePresence>
 

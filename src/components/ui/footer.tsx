@@ -32,9 +32,31 @@ function Footer() {
                             </ShimmerButton>
                         </Link>
 
-                        <p className="text-white/20 text-xs mt-6">
-                            © {new Date().getFullYear()} UeiDo. All rights reserved.
-                        </p>
+                        <div className="mt-8 space-y-2">
+                            <p className="text-white/40 text-sm">
+                                Made with ❤️ by{' '}
+                                <a
+                                    href="https://github.com/Srinjoy12"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-white font-medium hover:text-[#ff6b40] transition-colors"
+                                >
+                                    Srinjoy Roy
+                                </a>
+                            </p>
+                            <p className="text-white/30 text-xs">
+                                Queries & Feedback:{' '}
+                                <a
+                                    href="mailto:srinjoyroy30@gmail.com"
+                                    className="hover:text-[#ff6b40] transition-colors underline underline-offset-2"
+                                >
+                                    Email Me
+                                </a>
+                            </p>
+                            <p className="text-white/20 text-xs pt-4">
+                                © {new Date().getFullYear()} UeiDo. All rights reserved.
+                            </p>
+                        </div>
                     </div>
 
                     {/* Link Columns */}

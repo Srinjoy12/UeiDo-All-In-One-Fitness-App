@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { Link } from "react-router-dom"
 import type { LucideIcon } from "lucide-react"
@@ -37,6 +37,42 @@ export function NavBar({ items, className }: NavBarProps) {
             }
         }
     }
+
+    // Scroll Spy Effect
+    useEffect(() => {
+        const handleScroll = () => {
+            const hashItems = items.filter(item => item.url.startsWith('#'))
+            let currentActive: string | null = null
+
+            // Determine active section based on scroll position
+            if (window.scrollY < 100) {
+                const homeItem = hashItems.find(i => i.url === '#')
+                if (homeItem) currentActive = homeItem.name
+            } else {
+                for (const item of hashItems) {
+                    if (item.url === '#') continue
+                    const targetId = item.url.slice(1)
+                    const element = document.getElementById(targetId)
+                    if (element) {
+                        const rect = element.getBoundingClientRect()
+                        // If the section spans across the vertical middle of the screen
+                        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+                            currentActive = item.name
+                        }
+                    }
+                }
+            }
+
+            if (currentActive) {
+                setActiveTab(prev => prev !== currentActive ? currentActive! : prev)
+            }
+        }
+
+        window.addEventListener('scroll', handleScroll, { passive: true })
+        handleScroll() // Initial check
+
+        return () => window.removeEventListener('scroll', handleScroll)
+    }, [items])
 
     return (
         <div
