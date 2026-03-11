@@ -68,7 +68,9 @@ const beatOpacity = (progress: number, [start, end]: [number, number]) => {
     const fadeIn = 0.04;   // 4% of total scroll to fade in
     const fadeOut = 0.04;  // 4% to fade out
     if (progress < start || progress > end) return 0;
-    const inAlpha = clamp01((progress - start) / fadeIn);
+
+    // If it's the very first beat (start === 0), it should be fully visible immediately, no fade-in scroll required.
+    const inAlpha = start === 0 && progress < fadeIn ? 1 : clamp01((progress - start) / fadeIn);
     const outAlpha = clamp01((end - progress) / fadeOut);
     return Math.min(inAlpha, outAlpha);
 };

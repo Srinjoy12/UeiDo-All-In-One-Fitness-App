@@ -92,7 +92,7 @@ function FeatureImageComparison() {
                             <div className="absolute top-6 left-6 z-30 px-4 py-2 bg-black/50 backdrop-blur-md rounded-full border border-white/10 text-white text-sm font-bold tracking-wider uppercase">
                                 Before
                             </div>
-                            <div className="absolute top-6 right-6 z-30 px-4 py-2 bg-[#ff6b40]/80 backdrop-blur-md rounded-full border border-white/20 text-white text-sm font-bold tracking-wider uppercase transition-opacity" style={{ opacity: inset < 90 ? 1 : 0 }}>
+                            <div className="absolute top-6 right-6 z-30 px-4 py-2 bg-[#ff6b40]/80 backdrop-blur-md rounded-full border border-white/20 text-white text-sm font-bold tracking-wider uppercase">
                                 After
                             </div>
                         </div>
