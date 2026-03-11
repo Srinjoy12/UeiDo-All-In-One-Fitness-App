@@ -45,19 +45,21 @@ export default function Reminders() {
         </p>
       </section>
 
-      <div className="card p-5">
-        <p className="text-zinc-400 text-sm mb-4">
-          Enable notifications for this site so reminders can fire when the app is in the background.
-        </p>
-        <button
-          type="button"
-          onClick={requestNotificationPermission}
-          className="btn-secondary flex items-center gap-2"
-        >
-          <Bell className="w-4 h-4" />
-          Enable notifications
-        </button>
-      </div>
+      {'Notification' in window && Notification.permission !== 'granted' && (
+        <div className="card p-5">
+          <p className="text-zinc-400 text-sm mb-4">
+            Enable notifications for this site so reminders can fire when the app is in the background.
+          </p>
+          <button
+            type="button"
+            onClick={requestNotificationPermission}
+            className="btn-secondary flex items-center gap-2 transition-colors cursor-pointer"
+          >
+            <Bell className="w-4 h-4" />
+            Enable notifications
+          </button>
+        </div>
+      )}
 
       <form onSubmit={handleAdd} className="card p-5 space-y-4">
         <h3 className="font-semibold text-zinc-200">Add reminder</h3>
@@ -113,17 +115,24 @@ export default function Reminders() {
                 <div className="flex items-center gap-3">
                   <button
                     type="button"
-                    onClick={() => toggleReminder(r.id, !r.enabled)}
-                    className={`w-10 h-6 rounded-full transition-colors ${
-                      r.enabled ? 'btn-tab-active' : 'bg-[#111] border border-white/[0.06]'
-                    }`}
                     role="switch"
                     aria-checked={r.enabled}
+                    onClick={() => toggleReminder(r.id, !r.enabled)}
+                    className={`
+                      relative inline-flex h-8 w-14 shrink-0 cursor-pointer items-center justify-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75
+                      ${r.enabled ? 'bg-[#ff6b40]' : 'bg-transparent border border-white/[0.1]'}
+                    `}
                   >
+                    <span className="sr-only">Toggle reminder</span>
+                    {!r.enabled && (
+                      <span className="absolute inset-0 rounded-full border border-white/[0.1] pointer-events-none" />
+                    )}
                     <span
-                      className={`block w-4 h-4 rounded-full bg-white shadow mt-1 transition-transform ${
-                        r.enabled ? 'translate-x-5 ml-1' : 'translate-x-1'
-                      }`}
+                      aria-hidden="true"
+                      className={`
+                        pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out
+                        ${r.enabled ? 'translate-x-3' : '-translate-x-3'}
+                      `}
                     />
                   </button>
                   <div>

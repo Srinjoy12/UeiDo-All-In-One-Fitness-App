@@ -307,24 +307,38 @@ export default function Settings() {
 
       {/* Geo-tracking Toggle */}
       <div className="card p-5">
-        <div className="flex items-center justify-between">
-          <div>
+        <div className="flex items-center justify-between gap-4">
+          <div className="flex-1">
             <h3 className="font-semibold text-zinc-200 flex items-center gap-2">
-              <Navigation className="w-5 h-5" /> Auto-Track Gym Visits
+              <Navigation className="w-5 h-5 text-zinc-200" /> Auto-Track Gym Visits
             </h3>
-            <p className="text-xs text-zinc-500 mt-1">
+            <p className="text-sm text-zinc-500 mt-1 leading-snug">
               Automatically mark gym workouts as done when you're near your gym for 15 minutes.
             </p>
           </div>
           <button
             type="button"
+            role="switch"
+            aria-checked={geoEnabled}
             onClick={() => toggleGeo(!geoEnabled)}
-            className={`w-12 h-7 rounded-full transition-all duration-200 relative ${geoEnabled ? 'btn-tab-active' : 'bg-[#111] border border-white/[0.06]'
-              }`}
+            className={`
+              relative inline-flex h-8 w-14 shrink-0 cursor-pointer items-center justify-center rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2 focus-visible:ring-white/75
+              ${geoEnabled ? 'bg-[#ff6b40]' : 'bg-transparent border border-white/[0.1]'}
+            `}
           >
-            <div
-              className={`w-5 h-5 rounded-full bg-white absolute top-1 transition-all duration-200 ${geoEnabled ? 'left-6' : 'left-1'
-                }`}
+            <span className="sr-only">Toggle auto-track</span>
+
+            {/* The actual track if off */}
+            {!geoEnabled && (
+              <span className="absolute inset-0 rounded-full border border-white/[0.1] pointer-events-none" />
+            )}
+
+            <span
+              aria-hidden="true"
+              className={`
+                pointer-events-none inline-block h-6 w-6 transform rounded-full bg-white shadow-lg ring-0 transition duration-200 ease-in-out
+                ${geoEnabled ? 'translate-x-3' : '-translate-x-3'}
+              `}
             />
           </button>
         </div>
